@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "NewEra Solution",
   tagline: "Build Skills. Build the Future.",
   supportingLine: "Master the technologies shaping the next era of careers.",
-  contact: { phone: "", email: "", whatsapp: "", location: "" },
+  contact: { phone: "" as string, email: "" as string, whatsapp: "" as string, location: "" as string },
   socials: { instagram: "#", linkedin: "#", youtube: "#" },
 } as const;
 

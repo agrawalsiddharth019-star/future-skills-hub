@@ -23,7 +23,12 @@ function CoreScene({ compact = false }: { compact?: boolean }) {
       <mesh><icosahedronGeometry args={[1.18, 3]} /><meshStandardMaterial color={"#0c1633"} emissive={"#1664ff"} emissiveIntensity={.32} metalness={.72} roughness={.22} wireframe /></mesh>
       <mesh><icosahedronGeometry args={[.73, 2]} /><meshPhysicalMaterial color={"#334cff"} emissive={"#00bce7"} emissiveIntensity={.7} transmission={.12} metalness={.55} roughness={.18} /></mesh>
       {nodes.map((p, i) => <mesh key={i} position={p}><sphereGeometry args={[.085, 16, 16]} /><meshBasicMaterial color={i % 2 ? violet : lineColor} /></mesh>)}
-      {links.map(([a,b], i) => <Line key={i} points={[nodes[a], nodes[b]]} color={i % 2 ? violet : lineColor} lineWidth={.65} transparent opacity={.62} />)}
+      {links.map(([a,b], i) => {
+        const start = nodes[a];
+        const end = nodes[b];
+        if (!start || !end) return null;
+        return <Line key={i} points={[start, end]} color={i % 2 ? violet : lineColor} lineWidth={.65} transparent opacity={.62} />;
+      })}
       <mesh rotation={[Math.PI/2.25, .2, .4]}><torusGeometry args={[1.82,.012,8,120]} /><meshBasicMaterial color={lineColor} transparent opacity={.65} /></mesh>
       <mesh rotation={[-.5,.4,Math.PI/2]}><torusGeometry args={[2.15,.008,8,120]} /><meshBasicMaterial color={violet} transparent opacity={.42} /></mesh>
     </Float>
@@ -32,9 +37,9 @@ function CoreScene({ compact = false }: { compact?: boolean }) {
 }
 
 class WebGLErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
+  override state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  render() { return this.state.failed ? <div className="tech-core-fallback" aria-label="Abstract technology core"><span /><span /><span /></div> : this.props.children; }
+  override render() { return this.state.failed ? <div className="tech-core-fallback" aria-label="Abstract technology core"><span /><span /><span /></div> : this.props.children; }
 }
 
 export function TechCore({ compact = false }: { compact?: boolean }) {

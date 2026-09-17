@@ -46,6 +46,6 @@ export function EnquiryForm({ defaultCourse }: { defaultCourse?: CourseSlug }) {
     <p className="text-xs leading-5 text-muted-foreground">By submitting, you agree to be contacted about NewEra Solution programs. No payment is required.</p>
   </form>;
 }
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({ label, error, children }: { label: string; error: string | undefined; children: React.ReactNode }) {
   return <div className="grid gap-2"><Label>{label}</Label>{children}{error && <p className="text-xs text-destructive" role="alert">{error}</p>}</div>;
 }
